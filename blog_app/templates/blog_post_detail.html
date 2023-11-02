@@ -1,0 +1,32 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Post Detail</title>
+</head>
+<body>
+    <h1>{{ blog_post.title }}</h1>
+    <p>{{ blog_post.content |safe }}</p>
+
+    {% for related_post in related_posts %}
+        <li>
+            {{ related_post.title }}
+        </li>
+    {% endfor %}
+
+    <!-- Comment form -->
+<form method="POST" action="{% url 'comment_create' blog_post.id %}" >
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Submit Comment</button>
+</form>
+
+
+<!-- Display comments -->
+{% for comment in blog_post.comments.all %}
+    <p>{{ comment.body }}</p>
+    <small>{{ comment.created_on }}</small>
+{% endfor %}
+</body>
+</html>

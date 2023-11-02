@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="{% url "search_posts" %}" method="GET">
+        <input type="text" name="query" placeholder="Search...">
+        <input type="submit" value="Search">
+    </form>
+    
+    <h1>Blog Posts</h1>
+    <ul>
+        {% for blog_post in blog_posts %}
+            <li>
+                <a href="{% url 'blog_post_detail' blog_post.id %}">{{ blog_post.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+
+    {% if page.has_previous %}
+    <a href="?page={{ page.previous_page_number }}">Previous</a>
+{% endif %}
+
+{% if page.has_next %}
+    <a href="?page={{ page.next_page_number }}">Next</a>
+{% endif %}
+
+
+</body>
+</html>
